@@ -1,8 +1,9 @@
 # Notice
 
-This is a repository for the AD/AE phase of [SC'21](https://sc21.supercomputing.org/) for the paper titled "Accelerating XOR-based Erasure Coding using Program Optimization Techniques".
+This is a repository for the AD/AE phase of [SC'24](https://sc24.supercomputing.org/) for the paper titled "GRAPE: Eliminating the Redundant Encoding/Decoding Computations of
+Reed-Solomon Codes via Fine-grained Algebraic Operations".
 
-About the latest version of this library, please visit the author's repository: https://github.com/yuezato/xorslp_ec.
+About the latest version of this library, please visit the author's repository: https://github.com/ctrlenalt/Grape-EC.
 
 
 # For benchmarking ISA-L
@@ -16,8 +17,8 @@ If you have not installed Rust, please see the official instruction: https://www
 
 ## Build
 ```
-$ git clone https://github.com/sc2021anonym/slp-ec
-$ cd slp-ec;
+$ git clone https://github.com/ctrlenalt/Grape-EC
+$ cd Grape-EC;
 $ cargo build --release
 $ ./target/release/xorslp_ec --help
 xorslp_ec 0.1.0
@@ -46,71 +47,29 @@ OPTIONS:
 For **RS(10, 4)**, we only pass `--enc-dec`
 ```
 $ ./target/release/xorslp_ec --enc-dec
-[src/main.rs:119] &opt = Opt {
-    data_block: None,
-    parity_block: None,
-    loop_iter: None,
-    stat_enc: false,
-    stat_dec: None,
-    all_stat: false,
-    enc_dec: Some(
-        [],
-    ),
-    no_compress: false,
-    optimize_level: FusionSchedule,
-}
+Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5, 6])
-data size = 10158080
-Encode: avg = 7188.129360261446 MB/s, sd = 405.67342012547016
-Decode: avg = 5776.016738162249 MB/s, sd = 318.8590603497914
+Encode: avg = 12215.937289612828 MB/s, sd = 888.7051722346536
+Decode: avg = 2987.1077049562314 MB/s, sd = 182.92819579435638
 ```
 
 Using the `--parity-block` option, we can test **RS(10, 3)** as follows:
 ```
 $ ./target/release/xorslp_ec --enc-dec --parity-block 3
-[src/main.rs:119] &opt = Opt {
-    data_block: None,
-    parity_block: Some(
-        3,
-    ),
-    loop_iter: None,
-    stat_enc: false,
-    stat_dec: None,
-    all_stat: false,
-    enc_dec: Some(
-        [],
-    ),
-    no_compress: false,
-    optimize_level: FusionSchedule,
-}
+Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5])
-data size = 10158080
-Encode: avg = 9672.005039520893 MB/s, sd = 469.68358550063635
-Decode: avg = 7773.8606985381575 MB/s, sd = 396.7454904127163
+Encode: avg = 14718.110133753748 MB/s, sd = 1217.6787385946534
+Decode: avg = 4170.014002726505 MB/s, sd = 253.54185124250532
 ```
 
 Using the `--data-block` option, we can test **RS(9, 3)** as follows:
 ```
 $ ./target/release/xorslp_ec --enc-dec --data-block 9
-[src/main.rs:119] &opt = Opt {
-    data_block: Some(
-        9,
-    ),
-    parity_block: None,
-    loop_iter: None,
-    stat_enc: false,
-    stat_dec: None,
-    all_stat: false,
-    enc_dec: Some(
-        [],
-    ),
-    no_compress: false,
-    optimize_level: FusionSchedule,
-}
+Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5, 6])
-data size = 10027008
-Encode: avg = 7040.0763688192665 MB/s, sd = 355.0680770006292
-Decode: avg = 5839.390800319102 MB/s, sd = 303.60659053528127
+Encode: avg = 10403.021465003938 MB/s, sd = 741.5191134467314
+Decode: avg = 3050.6099655758417 MB/s, sd = 164.3522703691352
+
 ```
 
 We can `--data-block` and `--parity-block` at the same time.
