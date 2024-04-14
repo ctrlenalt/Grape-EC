@@ -173,9 +173,9 @@ def generate_vandermonde_matrix(rows, cols):
 
 def main():
     w = 8
-    rows = 3
-    cols = 10
-    vander_matrix = generate_vandermonde_matrix(rows, cols)
+    r = 3
+    k= 10
+    vander_matrix = generate_vandermonde_matrix(r, k)
     print('Vandermonde matrix:', vander_matrix)
     l_dict = {}
     l_result_binary = {}
@@ -201,7 +201,7 @@ def main():
             l_result_binary[idx] = l_result_binary_value
         idx += 1
 
-    big_matrix(cols, rows, w, l_result_binary)
+    big_matrix(k, r, w, l_result_binary)
 
 if __name__ == "__main__":
     main()
