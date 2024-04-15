@@ -6,8 +6,21 @@ Reed-Solomon Codes via Fine-grained Algebraic Operations".
 About the latest version of this library, please visit the author's repository: https://github.com/ctrlenalt/Grape-EC.
 
 
+
 # For benchmarking ISA-L
 Please see the note: [HOWTO_BENCHMARK_ISAL.md](HOWTO_BENCHMARK_ISAL.md)
+
+# For benchmarking SLP-EC
+Please see the note: [HOWTO_BENCHMARK_ISAL.md](HOWTO_BENCHMARK_SLP_EC.md)
+
+# For benchmarking ZCRS
+Please see the note: [HOWTO_BENCHMARK_ISAL.md](HOWTO_BENCHMARK_ZCRS.md)
+
+# For benchmarking ECRS
+Please see the note: [HOWTO_BENCHMARK_ISAL.md](HOWTO_BENCHMARK_ECRS.md)
+
+
+
 
 # For benchmarking Our Library
 
