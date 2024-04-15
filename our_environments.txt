@@ -1,4 +1,6 @@
-Our experimental environment consists of a DELL R730 Server featuring an Intel Xeon E5-2620 processor running at 2.40GHz with 12 cores, 64GB of DDR4-1866 memory, and 16GB of RAM. The server is equipped with a cache configuration of 32KB L1, 256KB L2, and 15MB L3. It operates on the Ubuntu 20.04 operating system, providing a robust platform for conducting a wide range of computational tasks and experiments.
+Our experimental environment consists of a DELL R730 Server featuring an Intel Xeon E5-2620 processor running at 2.40GHz with 12 cores, 
+64GB of DDR4-1866 memory, and 16GB of RAM. The server is equipped with a cache configuration of 32KB L1, 256KB L2, and 15MB L3.
+It operates on the Ubuntu 20.04 operating system, providing a robust platform for conducting a wide range of computational tasks and experiments.
 
 
 
