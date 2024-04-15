@@ -42,133 +42,98 @@ OPTIONS:
         --parity-block <parity-block>
         --stat-dec <stat-dec>...
 ```
+ 
+
+The script "grape-matrix-w=8.py" is used to generate the encoding matrix for Grape. By modifying the parameters k and r in the main() function, different RS(k,r) encoding parameter matrices can be generated. Subsequently, the corresponding "k-r-8ring_matrix.csv" CSV file can be created. The purpose of this script is to generate encoding matrices based on different RS encoding parameters and save the results as CSV files for further analysis and application.
+
+```
+Execute the command: python3  grape-matrix-w=8.py
+
+ 
+##Select different RS(k,r) encoding configurations
+
+By modifying the "fn main()" function in the "main.rs" file, you can change the line "let file_path = "../Grape-slp-ec/6-3-8ring_matrix.csv";" to test Grape's encoding and decoding effects under different encoding parameters. For example, selecting the "6-3-8ring_matrix.csv" file allows you to test the RS(6,3) encoding and decoding effects. If you choose different files, such as "7-3-8ring_matrix.csv" to "100-3-8ring_matrix.csv" representing different Grape encoding matrices with RS(k,r) parameters, you can test the encoding and decoding scenarios from RS(7,3) to RS(100,3). This way, you can choose different encoding parameter files as needed to test the encoding and decoding effects of the corresponding RS code
+
 
 ## Benchmarking Encoding and Decoding
-For **RS(10, 4)**, we only pass `--enc-dec`
-```
-$ ./target/release/xorslp_ec --enc-dec
-Block size = 2048
-Benchmarking of Encoding & Decoding (with [2, 4, 5, 6])
-Encode: avg = 12215.937289612828 MB/s, sd = 888.7051722346536
-Decode: avg = 2987.1077049562314 MB/s, sd = 182.92819579435638
-```
+For **RS(6, 3)**：
+For RS(6,3) encoding parameters, we choose to set the file path as "../Grape-slp-ec/6-3-8ring_matrix.csv". After saving the modifications, compile by running the "cargo build --release" command. Once the compilation is complete, proceed with the following steps:
 
-Using the `--parity-block` option, we can test **RS(10, 3)** as follows:
-```
-$ ./target/release/xorslp_ec --enc-dec --parity-block 3
+./target/release/xorslp_ec --enc-dec --data-block 6 --parity-block 3
 Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5])
-Encode: avg = 14718.110133753748 MB/s, sd = 1217.6787385946534
-Decode: avg = 4170.014002726505 MB/s, sd = 253.54185124250532
-```
+Encode: avg = 6730.219277859085 MB/s, sd = 588.1810438266632
+Decode: avg = 3969.264539513236 MB/s, sd = 359.0427361915413
 
-Using the `--data-block` option, we can test **RS(9, 3)** as follows:
-```
-$ ./target/release/xorslp_ec --enc-dec --data-block 9
+
+For **RS(100, 3)**：
+For RS(100,3) encoding parameters, we choose to set the file path as "../Grape-slp-ec/100-3-8ring_matrix.csv". After saving the modifications, compile by running the "cargo build --release" command. Once the compilation is complete, proceed with the following steps:
+
+./target/release/xorslp_ec --enc-dec --data-block 100 --parity-block 3
 Block size = 2048
-Benchmarking of Encoding & Decoding (with [2, 4, 5, 6])
-Encode: avg = 10403.021465003938 MB/s, sd = 741.5191134467314
-Decode: avg = 3050.6099655758417 MB/s, sd = 164.3522703691352
+Benchmarking of Encoding & Decoding (with [2, 4, 5])
+Encode: avg = 5952.949881780267 MB/s, sd = 139.4754898646716
+Decode: avg = 4356.131332243102 MB/s, sd = 78.08672136641981
 
-```
 
-We can `--data-block` and `--parity-block` at the same time.
-For example, we can test **RS(8, 2)** as follows:
-```
-./target/release/xorslp_ec --enc-dec --data-block 8 --parity-block 2
-[src/main.rs:122] &opt = Opt {
-    data_block: Some(
-        8,
-    ),
-    parity_block: Some(
-        2,
-    ),
-    loop_iter: None,
-    stat_enc: false,
-    stat_dec: None,
-    all_stat: false,
-    enc_dec: Some(
-        [],
-    ),
-    no_compress: false,
-    optimize_level: FusionSchedule,
-    cache_estimate: false,
-}
-block size = 2048
-Benchmarking of Encoding & Decoding (with [2, 4])
-data size = 10354688
-[src/main.rs:285] tmp_pebbles = 20
-Encode: avg = 18992.380568566114 MB/s, sd = 1411.7205078800941
-Decode: avg = 14975.864223554834 MB/s, sd = 992.8091275687873
-```
+##Count the XOR operations during encoding：
 
-## Obtain statistis for compressing, fusioning, scheduling
-For the encoding SLP,
-```
-$ ./target/release/xorslp_ec --stat-enc
-[src/main.rs:119] &opt = Opt {
-    data_block: None,
-    parity_block: None,
-    loop_iter: None,
-    stat_enc: true,
-    stat_dec: None,
-    all_stat: false,
-    enc_dec: None,
-    no_compress: false,
-    optimize_level: FusionSchedule,
-}
+Taking RS(6,3) as an example, to count the XOR operations during encoding, execute the following command: ./target/release/xorslp_ec --stat-enc --enc-dec --data-block 6 --parity-block 3. This command will track the number of XOR operations during encoding and also perform encoding and decoding operations simultaneously.
+
+Block size = 2048
 Statistics for Encoding
-[WithOUT comp.] XOR_NUM = 890, BASE_MEM_NUM = 2670, FUSIONED_MEM_NUM = 954, BASE_TRANSFER = 1868, FUSIONED_TRANSFER = 1868, SCHEDULED_TRANSFER = 1698
-[With comp.] XOR_NUM = 418, BASE_MEM_NUM = 1254, FUSIONED_MEM_NUM = 766, BASE_TRANSFER = 1782, FUSIONED_TRANSFER = 1300, SCHEDULED_TRANSFER = 1010
-```
+[WithOUT comp.] #XOR = 102, #MemAcc = 306, #[Fusioned]MemAcc = 178,
+  #[NoFusion]CacheTrans = 308, #[Fusioned]CacheTrans = 306, #[Fusioned&Scheduled]CacheTrans = 194,
+  #[NoFusion]Variables = 38, #[Fusioned]Variables = 38, #[Fusioned&Scheduled]Variables = 38,
+  #[NoFusion]Capacity = 77, #[Fusioned]Capacity = 77, #[Fusioned&Scheduled]Capacity = 76,
+  #Statements = 38
+[With comp.] #XOR = 98, #MemAcc = 294, #[Fusioned]MemAcc = 180,
+  #[NoFusion]CacheTrans = 356, #[Fusioned]CacheTrans = 275, #[Fusioned&Scheduled]CacheTrans = 200,
+  #[NoFusion]Variables = 98, #[Fusioned]Variables = 41, #[Fusioned&Scheduled]Variables = 38,
+  #[NoFusion]Capacity = 104, #[Fusioned]Capacity = 86, #[Fusioned&Scheduled]Capacity = 83,
+  #Statements = 41
 
-For the decoding SLPs,
-```
-./target/release/xorslp_ec --stat-dec 2 4 5 6
-[src/main.rs:119] &opt = Opt {
-   data_block: None,
-   parity_block: None,
-   loop_iter: None,
-   stat_enc: false,
-   stat_dec: Some(
-       [
-           2,
-           4,
-           5,
-           6,
-       ],
-   ),
-   all_stat: false,
-   enc_dec: None,
-   no_compress: false,
-   optimize_level: FusionSchedule,
-}
-Statistics for Decoding: [2, 4, 5, 6]
-[WithOUT comp.] XOR_NUM = 1368, BASE_MEM_NUM = 4104, FUSIONED_MEM_NUM = 1432, BASE_TRANSFER = 2824, FUSIONED_TRANSFER = 2824, SCHEDULED_TRANSFER = 2620
-[With comp.] XOR_NUM = 519, BASE_MEM_NUM = 1557, FUSIONED_MEM_NUM = 965, BASE_TRANSFER = 2223, FUSIONED_TRANSFER = 1659, SCHEDULED_TRANSFER = 1247
-```
+ ##Count the XOR operations during decoding：
+
+Taking RS(6,3) as an example, to count the XOR operations during decoding, execute the following command: ./target/release/xorslp_ec --enc-dec --data-block 6 --parity-block 3 --stat-dec 1 2 3. This command will track the number of XOR operations during decoding while performing encoding and decoding operations simultaneously.
+
+
+Block size = 2048
+Statistics for Decoding: [1, 2, 3]
+[WithOUT comp.] #XOR = 474, #MemAcc = 1422, #[Fusioned]MemAcc = 522,
+  #[NoFusion]CacheTrans = 1010, #[Fusioned]CacheTrans = 1004, #[Fusioned&Scheduled]CacheTrans = 602,
+  #[NoFusion]Variables = 24, #[Fusioned]Variables = 24, #[Fusioned&Scheduled]Variables = 24,
+  #[NoFusion]Capacity = 61, #[Fusioned]Capacity = 60, #[Fusioned&Scheduled]Capacity = 61,
+  #Statements = 24
+[With comp.] #XOR = 217, #MemAcc = 651, #[Fusioned]MemAcc = 405,
+  #[NoFusion]CacheTrans = 871, #[Fusioned]CacheTrans = 658, #[Fusioned&Scheduled]CacheTrans = 457,
+  #[NoFusion]Variables = 217, #[Fusioned]Variables = 94, #[Fusioned&Scheduled]Variables = 48,
+  #[NoFusion]Capacity = 263, #[Fusioned]Capacity = 140, #[Fusioned&Scheduled]Capacity = 96,
+  #Statements = 94
+
+
 
 We can obtain all the statistics by the one command
 ```
-$ ./target/release/xorslp_ec --all-stat
-[src/main.rs:119] &opt = Opt {
-    data_block: None,
-    parity_block: None,
-    loop_iter: None,
-    stat_enc: false,
-    stat_dec: None,
-    all_stat: true,
-    enc_dec: None,
-    no_compress: false,
-    optimize_level: FusionSchedule,
-}
-Dump All Statistics for Encoding and Decoding Programs
-Enc: [WithOUT comp.] XOR_NUM = 890, BASE_MEM_NUM = 2670, FUSIONED_MEM_NUM = 954, BASE_TRANSFER = 1868, FUSIONED_TRANSFER = 1868, SCHEDULED_TRANSFER = 1698
-[With comp.] XOR_NUM = 418, BASE_MEM_NUM = 1254, FUSIONED_MEM_NUM = 766, BASE_TRANSFER = 1782, FUSIONED_TRANSFER = 1300, SCHEDULED_TRANSFER = 1010
-Dec [0, 1, 2, 3]:[WithOUT comp.] XOR_NUM = 1164, BASE_MEM_NUM = 3492, FUSIONED_MEM_NUM = 1228, BASE_TRANSFER = 2416, FUSIONED_TRANSFER = 2416, SCHEDULED_TRANSFER = 2218
-[With comp.] XOR_NUM = 503, BASE_MEM_NUM = 1509, FUSIONED_MEM_NUM = 915, BASE_TRANSFER = 2165, FUSIONED_TRANSFER = 1588, SCHEDULED_TRANSFER = 1204
-Dec [0, 1, 2, 4]:[WithOUT comp.] XOR_NUM = 1196, BASE_MEM_NUM = 3588, FUSIONED_MEM_NUM = 1260, BASE_TRANSFER = 2480, FUSIONED_TRANSFER = 2480, SCHEDULED_TRANSFER = 2274
-[With comp.] XOR_NUM = 511, BASE_MEM_NUM = 1533, FUSIONED_MEM_NUM = 935, BASE_TRANSFER = 2209, FUSIONED_TRANSFER = 1612, SCHEDULED_TRANSFER = 1243
-Dec [0, 1, 2, 5]:[WithOUT comp.] XOR_NUM = 1186, BASE_MEM_NUM = 3558, FUSIONED_MEM_NUM = 1250, BASE_TRANSFER = 2460, FUSIONED_TRANSFER = 2460, SCHEDULED_TRANSFER = 2260
-...
-```
+Execute the command: ./target/release/xorslp_ec --all-stat
+
+[WithOUT comp.] #XOR = 916, #MemAcc = 2748, #[Fusioned]MemAcc = 964,
+  #[NoFusion]CacheTrans = 1896, #[Fusioned]CacheTrans = 1896, #[Fusioned&Scheduled]CacheTrans = 1432,
+  #[NoFusion]Variables = 24, #[Fusioned]Variables = 24, #[Fusioned&Scheduled]Variables = 24,
+  #[NoFusion]Capacity = 93, #[Fusioned]Capacity = 92, #[Fusioned&Scheduled]Capacity = 91,
+  #Statements = 24
+[With comp.] #XOR = 384, #MemAcc = 1152, #[Fusioned]MemAcc = 692,
+  #[NoFusion]CacheTrans = 1650, #[Fusioned]CacheTrans = 1184, #[Fusioned&Scheduled]CacheTrans = 871,
+  #[NoFusion]Variables = 384, #[Fusioned]Variables = 154, #[Fusioned&Scheduled]Variables = 96,
+  #[NoFusion]Capacity = 458, #[Fusioned]Capacity = 230, #[Fusioned&Scheduled]Capacity = 176,
+  #Statements = 154
+Dec [0, 1, 3, 4]:
+[WithOUT comp.] #XOR = 1354, #MemAcc = 4062, #[Fusioned]MemAcc = 1418,
+  #[NoFusion]CacheTrans = 2796, #[Fusioned]CacheTrans = 2796, #[Fusioned&Scheduled]CacheTrans = 2098,
+  #[NoFusion]Variables = 32, #[Fusioned]Variables = 32, #[Fusioned&Scheduled]Variables = 32,
+  #[NoFusion]Capacity = 88, #[Fusioned]Capacity = 87, #[Fusioned&Scheduled]Capacity = 90,
+
+
+
+
+ 
