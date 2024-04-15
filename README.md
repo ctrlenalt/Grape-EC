@@ -45,41 +45,42 @@ OPTIONS:
  
 
 The script "grape-matrix-w=8.py" is used to generate the encoding matrix for Grape. By modifying the parameters k and r in the main() function, different RS(k,r) encoding parameter matrices can be generated. Subsequently, the corresponding "k-r-8ring_matrix.csv" CSV file can be created. The purpose of this script is to generate encoding matrices based on different RS encoding parameters and save the results as CSV files for further analysis and application.
-
+```
 Execute the command: python3  grape-matrix-w=8.py
 
+
 ```
- 
 ##Select different RS(k,r) encoding configurations
 
 By modifying the "fn main()" function in the "main.rs" file, you can change the line "let file_path = "../Grape-slp-ec/6-3-8ring_matrix.csv";" to test Grape's encoding and decoding effects under different encoding parameters. For example, selecting the "6-3-8ring_matrix.csv" file allows you to test the RS(6,3) encoding and decoding effects. If you choose different files, such as "7-3-8ring_matrix.csv" to "100-3-8ring_matrix.csv" representing different Grape encoding matrices with RS(k,r) parameters, you can test the encoding and decoding scenarios from RS(7,3) to RS(100,3). This way, you can choose different encoding parameter files as needed to test the encoding and decoding effects of the corresponding RS code
-
-
+```
+```
 ## Benchmarking Encoding and Decoding
 For **RS(6, 3)**：
 For RS(6,3) encoding parameters, we choose to set the file path as "../Grape-slp-ec/6-3-8ring_matrix.csv". After saving the modifications, compile by running the "cargo build --release" command. Once the compilation is complete, proceed with the following steps:
-
+```
 ./target/release/xorslp_ec --enc-dec --data-block 6 --parity-block 3
 Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5])
 Encode: avg = 6730.219277859085 MB/s, sd = 588.1810438266632
 Decode: avg = 3969.264539513236 MB/s, sd = 359.0427361915413
 
-
+```
 For **RS(100, 3)**：
 For RS(100,3) encoding parameters, we choose to set the file path as "../Grape-slp-ec/100-3-8ring_matrix.csv". After saving the modifications, compile by running the "cargo build --release" command. Once the compilation is complete, proceed with the following steps:
-
+```
 ./target/release/xorslp_ec --enc-dec --data-block 100 --parity-block 3
 Block size = 2048
 Benchmarking of Encoding & Decoding (with [2, 4, 5])
 Encode: avg = 5952.949881780267 MB/s, sd = 139.4754898646716
 Decode: avg = 4356.131332243102 MB/s, sd = 78.08672136641981
 
-
+```
 ##Count the XOR operations during encoding：
 
 Taking RS(6,3) as an example, to count the XOR operations during encoding, execute the following command: ./target/release/xorslp_ec --stat-enc --enc-dec --data-block 6 --parity-block 3. This command will track the number of XOR operations during encoding and also perform encoding and decoding operations simultaneously.
-
+```
+./target/release/xorslp_ec --stat-enc --enc-dec --data-block 6 --parity-block 3
 Block size = 2048
 Statistics for Encoding
 [WithOUT comp.] #XOR = 102, #MemAcc = 306, #[Fusioned]MemAcc = 178,
@@ -93,10 +94,12 @@ Statistics for Encoding
   #[NoFusion]Capacity = 104, #[Fusioned]Capacity = 86, #[Fusioned&Scheduled]Capacity = 83,
   #Statements = 41
 
+```
  ##Count the XOR operations during decoding：
 
 Taking RS(6,3) as an example, to count the XOR operations during decoding, execute the following command: ./target/release/xorslp_ec --enc-dec --data-block 6 --parity-block 3 --stat-dec 1 2 3. This command will track the number of XOR operations during decoding while performing encoding and decoding operations simultaneously.
-
+```
+./target/release/xorslp_ec --enc-dec --data-block 6 --parity-block 3 --stat-dec 1 2 3
 
 Block size = 2048
 Statistics for Decoding: [1, 2, 3]
@@ -113,9 +116,11 @@ Statistics for Decoding: [1, 2, 3]
 
 
 ```
-
+```
 We can obtain all the statistics by the one command
 Execute the command:  ./target/release/xorslp_ec --all-stat
+```
+./target/release/xorslp_ec --all-stat
 
 [WithOUT comp.] #XOR = 916, #MemAcc = 2748, #[Fusioned]MemAcc = 964,
   #[NoFusion]CacheTrans = 1896, #[Fusioned]CacheTrans = 1896, #[Fusioned&Scheduled]CacheTrans = 1432,
