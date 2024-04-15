@@ -152,7 +152,7 @@ def big_matrix(k, r, w, l_result_binary):
             if i > 0:
                 transposed_4 = np.hstack((transposed_4, transposed))       
         transposed_5 = np.vstack((transposed_1, transposed_2, transposed_3, transposed_4))
-        print('transposed_4', transposed_5)
+        #print('transposed_4', transposed_5)
         transposed_matrix = transposed_5
     
     csv_file = str(k) + '-' + str(r) + '-' + str(w) + "ring_matrix.csv"    
@@ -160,9 +160,9 @@ def big_matrix(k, r, w, l_result_binary):
         writer = csv.writer(file)
         writer.writerows(transposed_matrix)    
     print(f"The transformed large matrix has been written to {csv_file}")
-    print('transposed_1', transposed_matrix)   
+    #print('transposed_1', transposed_matrix)   
     count_ones_transposed_matrix = np.sum(np.array(transposed_1) == '1')
-    print(f"Number of ones in count_ones_transposed_matrix: {count_ones_transposed_matrix}")
+    #print(f"Number of ones in count_ones_transposed_matrix: {count_ones_transposed_matrix}")
 
 def generate_vandermonde_matrix(rows, cols):
     GF256 = galois.GF(256, irreducible_poly=[1, 0, 0, 1, 1, 1, 0, 0, 1]) 
@@ -174,7 +174,7 @@ def generate_vandermonde_matrix(rows, cols):
 def main():
     w = 8
     r = 3
-    k= 10
+    k = 6
     vander_matrix = generate_vandermonde_matrix(r, k)
     print('Vandermonde matrix:', vander_matrix)
     l_dict = {}
@@ -185,7 +185,7 @@ def main():
         l_result_binary_value = []
         if idx > 0:
             for elem in row:
-                print('element:', elem)
+                #print('element:', elem)
                 elem = int(elem)
                 binary_elem = '{:08b}'.format(elem)
                 high_binary_string = '000000000'  # Initialize the last 9 bits of the binary string
@@ -197,7 +197,7 @@ def main():
                 l_result_binary_value.append(result_binary)
 
         if idx > 0:
-            print('l_result_binary_value:', l_result_binary_value)
+            #print('l_result_binary_value:', l_result_binary_value)
             l_result_binary[idx] = l_result_binary_value
         idx += 1
 
