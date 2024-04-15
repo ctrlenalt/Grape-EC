@@ -1,3 +1,6 @@
+The link to the SLP-EC source code is：
+https://github.com/yuezato/xorslp_ec
+
 # Notice
 
 This is a repository for the AD/AE phase of [SC'21](https://sc21.supercomputing.org/) for the paper titled "Accelerating XOR-based Erasure Coding using Program Optimization Techniques".

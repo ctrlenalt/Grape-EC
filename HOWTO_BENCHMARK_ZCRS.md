@@ -1,3 +1,6 @@
+The link to the ZCRS source code is：
+https://github.com/zhoutl1106/zerasure/tree/master
+
 # Zerasure
 Zerasure is the source code repository for the FAST'19 paper
 

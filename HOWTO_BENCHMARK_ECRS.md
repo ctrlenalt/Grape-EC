@@ -1,3 +1,7 @@
+The link to the ECRS source code is：
+https://github.com/Makovenko/OptiECRS/tree/master
+
+
 OptiECRS is a routine to perform optimization of Extended Cauchy Reed-Solomon codes.
 Supported methods:
 	BB:    Branch And Bound
