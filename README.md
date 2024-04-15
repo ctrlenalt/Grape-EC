@@ -53,8 +53,8 @@ Execute the command: python3  grape-matrix-w=8.py
 ##Select different RS(k,r) encoding configurations
 
 By modifying the "fn main()" function in the "main.rs" file, you can change the line "let file_path = "../Grape-slp-ec/6-3-8ring_matrix.csv";" to test Grape's encoding and decoding effects under different encoding parameters. For example, selecting the "6-3-8ring_matrix.csv" file allows you to test the RS(6,3) encoding and decoding effects. If you choose different files, such as "7-3-8ring_matrix.csv" to "100-3-8ring_matrix.csv" representing different Grape encoding matrices with RS(k,r) parameters, you can test the encoding and decoding scenarios from RS(7,3) to RS(100,3). This way, you can choose different encoding parameter files as needed to test the encoding and decoding effects of the corresponding RS code
-```
-```
+
+
 ## Benchmarking Encoding and Decoding
 For **RS(6, 3)**：
 For RS(6,3) encoding parameters, we choose to set the file path as "../Grape-slp-ec/6-3-8ring_matrix.csv". After saving the modifications, compile by running the "cargo build --release" command. Once the compilation is complete, proceed with the following steps:
