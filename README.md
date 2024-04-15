@@ -46,9 +46,9 @@ OPTIONS:
 
 The script "grape-matrix-w=8.py" is used to generate the encoding matrix for Grape. By modifying the parameters k and r in the main() function, different RS(k,r) encoding parameter matrices can be generated. Subsequently, the corresponding "k-r-8ring_matrix.csv" CSV file can be created. The purpose of this script is to generate encoding matrices based on different RS encoding parameters and save the results as CSV files for further analysis and application.
 
-```
 Execute the command: python3  grape-matrix-w=8.py
 
+```
  
 ##Select different RS(k,r) encoding configurations
 
@@ -112,10 +112,10 @@ Statistics for Decoding: [1, 2, 3]
   #Statements = 94
 
 
+```
 
 We can obtain all the statistics by the one command
-```
-Execute the command: ./target/release/xorslp_ec --all-stat
+Execute the command:  ./target/release/xorslp_ec --all-stat
 
 [WithOUT comp.] #XOR = 916, #MemAcc = 2748, #[Fusioned]MemAcc = 964,
   #[NoFusion]CacheTrans = 1896, #[Fusioned]CacheTrans = 1896, #[Fusioned&Scheduled]CacheTrans = 1432,
